@@ -8,7 +8,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Get the API key from the environment variable
-api_key = os.getenv('API_KEY')
+mistral_api_key = os.getenv('MISTRAL_API_KEY')
 
 # Simulated AI responses based on user prompts
 def generate_response(prompt):
