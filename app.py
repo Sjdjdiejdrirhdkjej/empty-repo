@@ -1,6 +1,14 @@
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
+
+# Get the API key from the environment variable
+api_key = os.getenv('API_KEY')
 
 # Simulated AI responses based on user prompts
 def generate_response(prompt):
