@@ -19,6 +19,8 @@ def generate_response(prompt):
         return "Creating a blog with Astro."
     elif "docs site" in prompt.lower():
         return "Creating a documentation site with Vitepress."
+    elif "twitter clone" in prompt.lower():
+        return "Generating a Twitter clone with real-time updates and user authentication."
     else:
         return "Generating a basic app with the specified stack."
 
@@ -35,6 +37,18 @@ def generate():
 @app.route('/~/<path:stack>')
 def dynamic_route(stack):
     return f"Start a blank app with {stack}"
+
+@app.route('/import', methods=['POST'])
+def import_from_service():
+    service = request.form['service']
+    if service == 'figma':
+        return "Importing design from Figma..."
+    elif service == 'github':
+        return "Importing code from GitHub..."
+    elif service == 'expo':
+        return "Building a mobile app with Expo..."
+    else:
+        return "Invalid service selected."
 
 if __name__ == '__main__':
     app.run(debug=True)
