@@ -1,82 +1,32 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
+
+# Simulated AI responses based on user prompts
+def generate_response(prompt):
+    # This is a placeholder for actual AI processing
+    if "ecommerce" in prompt.lower():
+        return "Generating an e-commerce products page with filtering, sorting, and pagination."
+    elif "blog" in prompt.lower():
+        return "Creating a blog with Astro."
+    elif "docs site" in prompt.lower():
+        return "Creating a documentation site with Vitepress."
+    else:
+        return "Generating a basic app with the specified stack."
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/~/bolt-astro-blog')
-def bolt_astro_blog():
-    return "Start a blog with Astro"
+@app.route('/generate', methods=['POST'])
+def generate():
+    prompt = request.form['prompt']
+    response = generate_response(prompt)
+    return jsonify({'response': response})
 
-@app.route('/~/bolt-vitepress')
-def bolt_vitepress():
-    return "Create a docs site with Vitepress"
-
-@app.route('/~/bolt-shadcn')
-def bolt_shadcn():
-    return "Scaffold UI with shadcn"
-
-@app.route('/~/bolt-slidev')
-def bolt_slidev():
-    return "Draft a presentation with Slidev"
-
-@app.route('/~/bolt-astro-basic')
-def bolt_astro_basic():
-    return "Start a blank app with Astro"
-
-@app.route('/~/bolt-vanilla-vite')
-def bolt_vanilla_vite():
-    return "Start a blank app with Vanilla Vite"
-
-@app.route('/~/bolt-nextjs-shadcn')
-def bolt_nextjs_shadcn():
-    return "Start a blank app with Next.js and Shadcn"
-
-@app.route('/~/bolt-nativescript-js')
-def bolt_nativescript_js():
-    return "Start a blank app with NativeScript JS"
-
-@app.route('/~/bolt-nuxt')
-def bolt_nuxt():
-    return "Start a blank app with Nuxt"
-
-@app.route('/~/bolt-slidev')
-def bolt_slidev_blank():
-    return "Start a blank app with Slidev"
-
-@app.route('/~/bolt-vue')
-def bolt_vue():
-    return "Start a blank app with Vue"
-
-@app.route('/~/bolt-sveltekit')
-def bolt_sveltekit():
-    return "Start a blank app with SvelteKit"
-
-@app.route('/~/bolt-remix')
-def bolt_remix():
-    return "Start a blank app with Remix"
-
-@app.route('/~/bolt-ts')
-def bolt_ts():
-    return "Start a blank app with TypeScript"
-
-@app.route('/~/bolt-vite-react')
-def bolt_vite_react():
-    return "Start a blank app with Vite and React"
-
-@app.route('/~/bolt-remotion')
-def bolt_remotion():
-    return "Start a blank app with Remotion"
-
-@app.route('/~/bolt-angular')
-def bolt_angular():
-    return "Start a blank app with Angular"
-
-@app.route('/~/bolt-qwik')
-def bolt_qwik():
-    return "Start a blank app with Qwik"
+@app.route('/~/<path:stack>')
+def dynamic_route(stack):
+    return f"Start a blank app with {stack}"
 
 if __name__ == '__main__':
     app.run(debug=True)

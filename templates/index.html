@@ -4,8 +4,11 @@
 <section>
     <h1>Join the world's largest hackathon!</h1>
     <p>Prompt, run, edit, and deploy full-stack web and mobile apps.</p>
-    <button>Clear</button>
-    <button>Update</button>
+    <form id="prompt-form">
+        <input type="text" id="prompt" placeholder="What do you want to build?" required>
+        <button type="submit">Generate</button>
+    </form>
+    <div id="response"></div>
     <p>or import from</p>
     <a href="#">Figma</a>
     <a href="#">GitHub</a>
@@ -34,4 +37,21 @@
     <a href="/~/bolt-angular">Angular</a>
     <a href="/~/bolt-qwik">Qwik</a>
 </section>
+<script>
+    document.getElementById('prompt-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const prompt = document.getElementById('prompt').value;
+        fetch('/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `prompt=${encodeURIComponent(prompt)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('response').innerText = data.response;
+        });
+    });
+</script>
 {% endblock %}
