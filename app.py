@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 import os
+from routes import ai_browser_bp
 
 # Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
+app.register_blueprint(ai_browser_bp)
 
 # Get the API key from the environment variable
 mistral_api_key = os.getenv('MISTRAL_API_KEY')
